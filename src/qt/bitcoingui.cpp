@@ -277,6 +277,20 @@ void BitcoinGUI::createActions()
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
+    siteAction = new QAction(platformStyle->SingleColorIcon(":/icons/address-book"), tr("&Site"), this);
+    siteAction->setStatusTip(tr("View site links"));
+    siteAction->setToolTip(siteAction->statusTip());
+    siteAction->setCheckable(true);
+    siteAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+    tabGroup->addAction(siteAction);
+
+    chatAction = new QAction(platformStyle->SingleColorIcon(":/icons/edit"), tr("&Chat"), this);
+    chatAction->setStatusTip(tr("Open chat placeholder"));
+    chatAction->setToolTip(chatAction->statusTip());
+    chatAction->setCheckable(true);
+    chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(chatAction);
+
 #ifdef ENABLE_WALLET
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
@@ -292,6 +306,10 @@ void BitcoinGUI::createActions()
     connect(receiveCoinsMenuAction, &QAction::triggered, this, &BitcoinGUI::gotoReceiveCoinsPage);
     connect(historyAction, &QAction::triggered, [this]{ showNormalIfMinimized(); });
     connect(historyAction, &QAction::triggered, this, &BitcoinGUI::gotoHistoryPage);
+    connect(siteAction, &QAction::triggered, [this]{ showNormalIfMinimized(); });
+    connect(siteAction, &QAction::triggered, this, &BitcoinGUI::gotoSitePage);
+    connect(chatAction, &QAction::triggered, [this]{ showNormalIfMinimized(); });
+    connect(chatAction, &QAction::triggered, this, &BitcoinGUI::gotoChatPage);
 #endif // ENABLE_WALLET
 
     quitAction = new QAction(tr("E&xit"), this);
@@ -550,6 +568,8 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
+        toolbar->addAction(siteAction);
+        toolbar->addAction(chatAction);
         overviewAction->setChecked(true);
 
 #ifdef ENABLE_WALLET
@@ -737,6 +757,8 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     receiveCoinsAction->setEnabled(enabled);
     receiveCoinsMenuAction->setEnabled(enabled);
     historyAction->setEnabled(enabled);
+    siteAction->setEnabled(enabled);
+    chatAction->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
@@ -868,6 +890,18 @@ void BitcoinGUI::gotoHistoryPage()
 {
     historyAction->setChecked(true);
     if (walletFrame) walletFrame->gotoHistoryPage();
+}
+
+void BitcoinGUI::gotoSitePage()
+{
+    siteAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoSitePage();
+}
+
+void BitcoinGUI::gotoChatPage()
+{
+    chatAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoChatPage();
 }
 
 void BitcoinGUI::gotoReceiveCoinsPage()
