@@ -351,6 +351,8 @@ def main():
     configfile = os.path.abspath(os.path.dirname(__file__)) + "/../config.ini"
     if not os.path.exists(configfile):
         repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        litecoind_path = os.path.join(repo_root, "src", "litecoind")
+        enable_bitcoind = os.path.exists(litecoind_path)
         fallback = tempfile.NamedTemporaryFile(prefix="litecoin-test-config-", suffix=".ini", delete=False)
         fallback.write(
             (
@@ -367,14 +369,13 @@ def main():
                 "USE_SQLITE=true\n"
                 "ENABLE_CLI=false\n"
                 "ENABLE_WALLET_TOOL=false\n"
-                "ENABLE_BITCOIND=false\n"
+                f"ENABLE_BITCOIND={'true' if enable_bitcoind else 'false'}\n"
                 "ENABLE_FUZZ=false\n"
                 "ENABLE_ZMQ=false\n"
             ).encode("utf8")
         )
         fallback.close()
         configfile = fallback.name
-        print(f"Warning: config.ini not found; using fallback config at {configfile}")
     config.read_file(open(configfile, encoding="utf8"))
 
     passon_args.append("--configfile=%s" % configfile)
