@@ -58,6 +58,14 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     vbox->addLayout(hbox_buttons);
     transactionsPage->setLayout(vbox);
 
+    sitePage = new QWidget(this);
+    QVBoxLayout *siteLayout = new QVBoxLayout(sitePage);
+    siteLayout->addStretch();
+
+    chatPage = new QWidget(this);
+    QVBoxLayout *chatLayout = new QVBoxLayout(chatPage);
+    chatLayout->addStretch();
+
     receiveCoinsPage = new ReceiveCoinsDialog(platformStyle);
     sendCoinsPage = new SendCoinsDialog(platformStyle);
 
@@ -66,6 +74,8 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
+    addWidget(sitePage);
+    addWidget(chatPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
 
@@ -166,6 +176,16 @@ void WalletView::gotoOverviewPage()
 void WalletView::gotoHistoryPage()
 {
     setCurrentWidget(transactionsPage);
+}
+
+void WalletView::gotoSitePage()
+{
+    setCurrentWidget(sitePage);
+}
+
+void WalletView::gotoChatPage()
+{
+    setCurrentWidget(chatPage);
 }
 
 void WalletView::gotoReceiveCoinsPage()
