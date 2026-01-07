@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE_NAME="lite-qt-exe-ok:latest"
+IMAGE_NAME="altomake:litecoin"
 CONTAINER_NAME="2tabchat"
-REPO_URL_DEFAULT="https://github.com/litecoin-project/litecoin.git"
+REPO_URL_DEFAULT="https://github.com/azusachin/AltCoinsEx.git"
 
 WORK_DIR="${PWD}"
 REPO_URL="${REPO_URL:-${REPO_URL_DEFAULT}}"
-BRANCH_NAME="${BRANCH_NAME:-codex/add-site-and-chat-tabs-in-wallet-interface}"
+BRANCH_NAME="${BRANCH_NAME:-codex/add-website-content-display-in-site-tab}"
 HTTP_PROXY_DEFAULT="http://192.168.100.2:10810"
 HTTPS_PROXY_DEFAULT="http://192.168.100.2:10810"
 NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.tsinghua.edu.cn,mirrors.tuna.tsinghua.edu.cn"
