@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE_NAME="lite-qt-exe-ok:latest"
+IMAGE_NAME="altomake:litecoin"
 CONTAINER_NAME="2tabchat"
 REPO_URL_DEFAULT="https://github.com/azusachin/AltCoinsEx.git"
 
