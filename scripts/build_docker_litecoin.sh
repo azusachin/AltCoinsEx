@@ -116,11 +116,11 @@ run_build_container() {
       make -j"$(nproc)"
 
       mkdir -p /output
-      cp -v build-linux/src/litecoind /output/
+      cp -v build-linux/src/acecnd /output/
       cp -v build-linux/src/litecoin-cli /output/
       cp -v build-linux/src/litecoin-tx /output/
       cp -v build-linux/src/qt/litecoin-qt /output/
-      cp -v build-win/src/litecoind.exe /output/
+      cp -v build-win/src/acecnd.exe /output/
       cp -v build-win/src/litecoin-cli.exe /output/
       cp -v build-win/src/litecoin-tx.exe /output/
       cp -v build-win/src/qt/litecoin-qt.exe /output/

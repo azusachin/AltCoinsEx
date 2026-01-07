@@ -43,7 +43,7 @@ docker exec -e http_proxy="${HTTP_PROXY}" -e https_proxy="${HTTPS_PROXY}" -e no_
   make -j"$(nproc)"
 
   mkdir -p /work/output
-  cp -v src/litecoind.exe /work/output/
+  cp -v src/acecnd.exe /work/output/
   cp -v src/litecoin-cli.exe /work/output/
   cp -v src/litecoin-tx.exe /work/output/
   cp -v src/qt/litecoin-qt.exe /work/output/

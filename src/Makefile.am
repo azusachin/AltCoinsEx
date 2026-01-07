@@ -88,7 +88,7 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += litecoind
+  bin_PROGRAMS += acecnd
 endif
 
 if BUILD_BITCOIN_NODE
@@ -669,11 +669,11 @@ litecoin_bin_ldadd = \
 
 litecoin_bin_ldadd += $(BOOST_LIBS) $(BDB_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(SQLITE_LIBS) $(MWEB_LIBS)
 
-litecoind_SOURCES = $(litecoin_daemon_sources)
-litecoind_CPPFLAGS = $(litecoin_bin_cppflags)
-litecoind_CXXFLAGS = $(litecoin_bin_cxxflags)
-litecoind_LDFLAGS = $(litecoin_bin_ldflags)
-litecoind_LDADD = $(LIBBITCOIN_SERVER) $(litecoin_bin_ldadd)
+acecnd_SOURCES = $(litecoin_daemon_sources)
+acecnd_CPPFLAGS = $(litecoin_bin_cppflags)
+acecnd_CXXFLAGS = $(litecoin_bin_cxxflags)
+acecnd_LDFLAGS = $(litecoin_bin_ldflags)
+acecnd_LDADD = $(LIBBITCOIN_SERVER) $(litecoin_bin_ldadd)
 
 litecoin_node_SOURCES = $(litecoin_daemon_sources)
 litecoin_node_CPPFLAGS = $(litecoin_bin_cppflags)

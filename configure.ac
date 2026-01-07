@@ -20,7 +20,7 @@ if test "x$PKG_CONFIG" = x; then
   AC_MSG_ERROR([pkg-config not found])
 fi
 
-BITCOIN_DAEMON_NAME=litecoind
+BITCOIN_DAEMON_NAME=acecnd
 BITCOIN_GUI_NAME=litecoin-qt
 BITCOIN_CLI_NAME=litecoin-cli
 BITCOIN_TX_NAME=litecoin-tx
