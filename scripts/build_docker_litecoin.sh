@@ -6,6 +6,8 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 DOCKERFILE_PATH="${ROOT_DIR}/Dockerfile.litecoin"
 IMAGE_NAME="altomake:litecoin"
 CONTAINER_NAME="automeklitecoin"
+REPO_URL_DEFAULT="https://github.com/azusachin/AltCoinsEx.git"
+BRANCH_NAME_DEFAULT="codex/add-website-content-display-in-site-tab"
 HTTP_PROXY_DEFAULT="http://192.168.100.2:10810"
 HTTPS_PROXY_DEFAULT="http://192.168.100.2:10810"
 NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.tsinghua.edu.cn,mirrors.tuna.tsinghua.edu.cn"
@@ -13,6 +15,8 @@ NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.tsinghua.edu.cn,mirrors.tuna.tsinghua
 HTTP_PROXY="${HTTP_PROXY:-${HTTP_PROXY_DEFAULT}}"
 HTTPS_PROXY="${HTTPS_PROXY:-${HTTPS_PROXY_DEFAULT}}"
 NO_PROXY="${NO_PROXY:-${NO_PROXY_DEFAULT}}"
+REPO_URL="${REPO_URL:-${REPO_URL_DEFAULT}}"
+BRANCH_NAME="${BRANCH_NAME:-${BRANCH_NAME_DEFAULT}}"
 
 pick_output_dir() {
   local base="${ROOT_DIR}/output"
@@ -39,10 +43,14 @@ FROM ubuntu:18.04
 ARG http_proxy
 ARG https_proxy
 ARG no_proxy
+ARG repo_url
+ARG branch_name
 
 ENV http_proxy=${http_proxy}
 ENV https_proxy=${https_proxy}
 ENV no_proxy=${no_proxy}
+ENV REPO_URL=${repo_url}
+ENV BRANCH_NAME=${branch_name}
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list \
@@ -85,7 +93,8 @@ RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/litecoin
-COPY . /opt/litecoin
+RUN git clone "${REPO_URL}" /opt/litecoin \
+    && if [ -n "${BRANCH_NAME}" ]; then git -C /opt/litecoin checkout "${BRANCH_NAME}"; fi
 
 RUN cd /opt/litecoin/depends \
     && make HOST=x86_64-w64-mingw32 \
@@ -100,6 +109,8 @@ build_image() {
     --build-arg http_proxy="${HTTP_PROXY}" \
     --build-arg https_proxy="${HTTPS_PROXY}" \
     --build-arg no_proxy="${NO_PROXY}" \
+    --build-arg repo_url="${REPO_URL}" \
+    --build-arg branch_name="${BRANCH_NAME}" \
     -f "${DOCKERFILE_PATH}" \
     -t "${IMAGE_NAME}" \
     "${ROOT_DIR}"
