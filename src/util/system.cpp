@@ -71,7 +71,7 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "litecoin.conf";
+const char * const BITCOIN_CONF_FILENAME = "AltCoinsExCoin.conf";
 const char * const BITCOIN_SETTINGS_FILENAME = "settings.json";
 
 ArgsManager gArgs;
@@ -650,12 +650,12 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows: C:\Users\Username\AppData\Roaming\Bitcoin
-    // macOS: ~/Library/Application Support/Bitcoin
-    // Unix-like: ~/.bitcoin
+    // Windows: C:\Users\Username\AppData\Roaming\AltCoinsExCoin
+    // macOS: ~/Library/Application Support/AltCoinsExCoin
+    // Unix-like: ~/.AltCoinsExCoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Litecoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AltCoinsExCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -665,10 +665,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // macOS
-    return pathRet / "Library/Application Support/Litecoin";
+    return pathRet / "Library/Application Support/AltCoinsExCoin";
 #else
     // Unix-like
-    return pathRet / ".litecoin";
+    return pathRet / ".AltCoinsExCoin";
 #endif
 #endif
 }
