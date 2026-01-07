@@ -47,7 +47,7 @@ const QString BITCOIN_IPC_PREFIX("altcoinsex.com:");
 //
 static QString ipcServerName()
 {
-    QString name("LitecoinQt");
+    QString name("AltCoinsExCoinQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path

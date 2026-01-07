@@ -8,7 +8,7 @@ define(_CLIENT_VERSION_IS_RELEASE, true)
 define(_COPYRIGHT_YEAR, 2024)
 define(_COPYRIGHT_HOLDERS,[The %s developers])
 define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Litecoin Core]])
-AC_INIT([Litecoin Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/litecoin-project/litecoin/issues],[litecoin],[https://litecoin.org/])
+AC_INIT([AltCoinsExCoin Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/litecoin-project/litecoin/issues],[litecoin],[https://litecoin.org/])
 AC_CONFIG_SRCDIR([src/validation.cpp])
 AC_CONFIG_HEADERS([src/config/bitcoin-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -21,10 +21,10 @@ if test "x$PKG_CONFIG" = x; then
 fi
 
 BITCOIN_DAEMON_NAME=acecnd
-BITCOIN_GUI_NAME=litecoin-qt
-BITCOIN_CLI_NAME=litecoin-cli
-BITCOIN_TX_NAME=litecoin-tx
-BITCOIN_WALLET_TOOL_NAME=litecoin-wallet
+BITCOIN_GUI_NAME=acec-qt
+BITCOIN_CLI_NAME=acec-cli
+BITCOIN_TX_NAME=acec-tx
+BITCOIN_WALLET_TOOL_NAME=acec-wallet
 
 dnl Unless the user specified ARFLAGS, force it to be cr
 AC_ARG_VAR(ARFLAGS, [Flags for the archiver, defaults to <cr> if not set])

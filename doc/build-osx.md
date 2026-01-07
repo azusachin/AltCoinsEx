@@ -114,7 +114,7 @@ touch "/Users/${USER}/Library/Application Support/AltCoinsExCoin/AltCoinsExCoin.
 chmod 600 "/Users/${USER}/Library/Application Support/AltCoinsExCoin/AltCoinsExCoin.conf"
 ```
 
-The first time you run litecoind, it will start downloading the blockchain. This process could
+The first time you run acecnd, it will start downloading the blockchain. This process could
 take many hours, or even days on slower than average systems.
 
 You can monitor the download process by looking at the debug.log file:
@@ -125,8 +125,8 @@ tail -f $HOME/Library/Application\ Support/AltCoinsExCoin/debug.log
 ## Other commands:
 ```shell
 ./src/acecnd -daemon      # Starts the AltCoinsExCoin daemon.
-./src/litecoin-cli --help    # Outputs a list of command-line options.
-./src/litecoin-cli help      # Outputs a list of RPC commands when the daemon is running.
+./src/acec-cli --help    # Outputs a list of command-line options.
+./src/acec-cli help      # Outputs a list of RPC commands when the daemon is running.
 ```
 
 ## Notes

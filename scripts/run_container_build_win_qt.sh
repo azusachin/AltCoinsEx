@@ -44,9 +44,9 @@ docker exec -e http_proxy="${HTTP_PROXY}" -e https_proxy="${HTTPS_PROXY}" -e no_
 
   mkdir -p /work/output
   cp -v src/acecnd.exe /work/output/
-  cp -v src/litecoin-cli.exe /work/output/
-  cp -v src/litecoin-tx.exe /work/output/
-  cp -v src/qt/litecoin-qt.exe /work/output/
+  cp -v src/acec-cli.exe /work/output/
+  cp -v src/acec-tx.exe /work/output/
+  cp -v src/qt/acec-qt.exe /work/output/
 '
 
 echo "Build complete. Artifacts are in ${WORK_DIR}/output"

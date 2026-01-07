@@ -117,13 +117,13 @@ run_build_container() {
 
       mkdir -p /output
       cp -v build-linux/src/acecnd /output/
-      cp -v build-linux/src/litecoin-cli /output/
-      cp -v build-linux/src/litecoin-tx /output/
-      cp -v build-linux/src/qt/litecoin-qt /output/
+      cp -v build-linux/src/acec-cli /output/
+      cp -v build-linux/src/acec-tx /output/
+      cp -v build-linux/src/qt/acec-qt /output/
       cp -v build-win/src/acecnd.exe /output/
-      cp -v build-win/src/litecoin-cli.exe /output/
-      cp -v build-win/src/litecoin-tx.exe /output/
-      cp -v build-win/src/qt/litecoin-qt.exe /output/
+      cp -v build-win/src/acec-cli.exe /output/
+      cp -v build-win/src/acec-tx.exe /output/
+      cp -v build-win/src/qt/acec-qt.exe /output/
     '
 }
 
