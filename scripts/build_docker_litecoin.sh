@@ -8,7 +8,7 @@ IMAGE_NAME="altomake:litecoin"
 CONTAINER_NAME="automeklitecoin"
 HTTP_PROXY_DEFAULT="http://192.168.100.2:10810"
 HTTPS_PROXY_DEFAULT="http://192.168.100.2:10810"
-NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.aliyun.com,mirrors.aliyun.com"
+NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.tsinghua.edu.cn,mirrors.tuna.tsinghua.edu.cn"
 
 HTTP_PROXY="${HTTP_PROXY:-${HTTP_PROXY_DEFAULT}}"
 HTTPS_PROXY="${HTTPS_PROXY:-${HTTPS_PROXY_DEFAULT}}"
@@ -45,8 +45,8 @@ ENV https_proxy=${https_proxy}
 ENV no_proxy=${no_proxy}
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu/|g' /etc/apt/sources.list \
-    && sed -i 's|http://security.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu/|g' /etc/apt/sources.list \
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list \
+    && sed -i 's|http://security.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
@@ -61,6 +61,27 @@ RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu
         python3 \
         g++-mingw-w64-x86-64 \
         nsis \
+        bison \
+        flex \
+        gperf \
+        ninja-build \
+        libnss3-dev \
+        libnspr4-dev \
+        libdbus-1-dev \
+        libx11-xcb-dev \
+        libxcomposite-dev \
+        libxdamage-dev \
+        libxrandr-dev \
+        libxss-dev \
+        libxtst-dev \
+        libxkbcommon-x11-dev \
+        libxcb1-dev \
+        libxfixes-dev \
+        libxi-dev \
+        libxrender-dev \
+        libgl1-mesa-dev \
+        libasound2-dev \
+        libgtk-3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/litecoin
