@@ -2,12 +2,12 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-DOCKERFILE_PATH="${ROOT_DIR}/Dockerfile.litecoin"
+DOCKERFILE_PATH="${SCRIPT_DIR}/Dockerfile.litecoin"
 IMAGE_NAME="altomake:litecoin"
 CONTAINER_NAME="automeklitecoin"
 REPO_URL_DEFAULT="https://github.com/azusachin/AltCoinsEx.git"
 BRANCH_NAME_DEFAULT="codex/add-website-content-display-in-site-tab"
+REPO_NAME_DEFAULT="AltCoinsEx"
 HTTP_PROXY_DEFAULT="http://192.168.100.2:10810"
 HTTPS_PROXY_DEFAULT="http://192.168.100.2:10810"
 NO_PROXY_DEFAULT="localhost,127.0.0.1,::1,.tsinghua.edu.cn,mirrors.tuna.tsinghua.edu.cn"
@@ -17,9 +17,10 @@ HTTPS_PROXY="${HTTPS_PROXY:-${HTTPS_PROXY_DEFAULT}}"
 NO_PROXY="${NO_PROXY:-${NO_PROXY_DEFAULT}}"
 REPO_URL="${REPO_URL:-${REPO_URL_DEFAULT}}"
 BRANCH_NAME="${BRANCH_NAME:-${BRANCH_NAME_DEFAULT}}"
+REPO_NAME="${REPO_NAME:-${REPO_NAME_DEFAULT}}"
 
 pick_output_dir() {
-  local base="${ROOT_DIR}/output"
+  local base="${SCRIPT_DIR}/output"
   if [[ ! -e "${base}" ]]; then
     echo "${base}"
     return
@@ -45,12 +46,14 @@ ARG https_proxy
 ARG no_proxy
 ARG repo_url
 ARG branch_name
+ARG repo_name
 
 ENV http_proxy=${http_proxy}
 ENV https_proxy=${https_proxy}
 ENV no_proxy=${no_proxy}
 ENV REPO_URL=${repo_url}
 ENV BRANCH_NAME=${branch_name}
+ENV REPO_NAME=${repo_name}
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list \
@@ -92,15 +95,15 @@ RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu
         libgtk-3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/litecoin
-RUN git clone "${REPO_URL}" /opt/litecoin \
-    && if [ -n "${BRANCH_NAME}" ]; then git -C /opt/litecoin checkout "${BRANCH_NAME}"; fi
+WORKDIR /opt/${REPO_NAME}
+RUN git clone "${REPO_URL}" /opt/${REPO_NAME} \
+    && if [ -n "${BRANCH_NAME}" ]; then git -C /opt/${REPO_NAME} checkout "${BRANCH_NAME}"; fi
 
-RUN cd /opt/litecoin/depends \
+RUN cd /opt/${REPO_NAME}/depends \
     && make HOST=x86_64-w64-mingw32 \
     && make HOST=x86_64-pc-linux-gnu
 
-ENV DEPENDS_DIR=/opt/litecoin/depends
+ENV DEPENDS_DIR=/opt/${REPO_NAME}/depends
 EOF
 }
 
@@ -111,9 +114,10 @@ build_image() {
     --build-arg no_proxy="${NO_PROXY}" \
     --build-arg repo_url="${REPO_URL}" \
     --build-arg branch_name="${BRANCH_NAME}" \
+    --build-arg repo_name="${REPO_NAME}" \
     -f "${DOCKERFILE_PATH}" \
     -t "${IMAGE_NAME}" \
-    "${ROOT_DIR}"
+    "${SCRIPT_DIR}"
 }
 
 run_build_container() {
@@ -127,12 +131,11 @@ run_build_container() {
     -e http_proxy="${HTTP_PROXY}" \
     -e https_proxy="${HTTPS_PROXY}" \
     -e no_proxy="${NO_PROXY}" \
-    -v "${ROOT_DIR}:/workspace/litecoin" \
     -v "${output_dir}:/output" \
     "${IMAGE_NAME}" \
     bash -euxo pipefail -c '
-      cd /workspace/litecoin
-      export DEPENDS_DIR=/opt/litecoin/depends
+      cd /opt/'"${REPO_NAME}"'
+      export DEPENDS_DIR=/opt/'"${REPO_NAME}"'/depends
 
       mkdir -p build-linux
       cd build-linux
@@ -140,7 +143,7 @@ run_build_container() {
       CONFIG_SITE="${DEPENDS_DIR}/x86_64-pc-linux-gnu/share/config.site" ../configure --prefix=/
       make -j"$(nproc)"
 
-      cd /workspace/litecoin
+      cd /opt/'"${REPO_NAME}"'
       mkdir -p build-win
       cd build-win
       ../autogen.sh
