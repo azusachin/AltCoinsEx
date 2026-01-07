@@ -3,7 +3,7 @@ set -euo pipefail
 
 IMAGE_NAME="lite-qt-exe-ok:latest"
 CONTAINER_NAME="2tabchat"
-REPO_URL_DEFAULT="https://github.com/litecoin-project/litecoin.git"
+REPO_URL_DEFAULT="https://github.com/azusachin/litecoin.git"
 WORK_DIR="${PWD}"
 REPO_URL="${REPO_URL:-${REPO_URL_DEFAULT}}"
 BRANCH_NAME="${BRANCH_NAME:-codex/add-site-and-chat-tabs-in-wallet-interface}"
